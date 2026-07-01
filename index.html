@@ -145,7 +145,7 @@
 
   .toc-grid{
     max-width: 1000px;
-    margin: 32px auto 90px;
+    margin: 32px auto 0;
     padding: 0 28px;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
@@ -185,7 +185,7 @@
 
   .social-section{
     text-align:center;
-    padding: 0 24px 90px;
+    padding: 60px 24px 90px;
   }
 
   .social-section .eyebrow{ margin-bottom: 18px; }
@@ -219,25 +219,54 @@
 
   .social-link .icon{ font-size: 18px; }
 
-  .category-header{
+  .sub-header{
     text-align:center;
-    padding: 56px 24px 10px;
+    padding: 48px 24px 10px;
   }
 
-  .category-header .eyebrow{ margin-bottom:10px; }
+  .back-btn{
+    background:none;
+    border: 1px solid var(--surface-2);
+    color: var(--accent-lavender);
+    font-family: inherit;
+    font-size:13px;
+    cursor:pointer;
+    padding: 7px 16px;
+    border-radius: 999px;
+    transition: all .2s ease;
+  }
 
-  .category-header h2{
+  .back-btn:hover{ color: var(--text); border-color: var(--accent-pink); background: var(--surface-2); }
+
+  .back-btn-wrap{
+    max-width: 1100px;
+    margin: 20px auto 0;
+    padding: 0 32px;
+  }
+
+  .sub-header .eyebrow{ margin-bottom:10px; }
+
+  .sub-header h2{
     font-family:'Playfair Display', serif;
     font-style: italic;
-    font-size: clamp(28px, 5vw, 42px);
+    font-size: clamp(26px, 5vw, 40px);
     margin: 0 0 10px;
   }
 
-  .category-header p{
+  .sub-header p{
     color: var(--text-muted);
     font-size: 14px;
     max-width: 460px;
     margin: 0 auto;
+  }
+
+  .tiles-grid{
+    max-width: 1000px;
+    margin: 32px auto 100px;
+    padding: 0 28px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 22px;
   }
 
   .board{
@@ -334,22 +363,9 @@
 
   .post-view{
     max-width: 720px;
-    margin: 50px auto 100px;
+    margin: 30px auto 60px;
     padding: 0 24px;
   }
-
-  .back-btn{
-    background:none;
-    border:none;
-    color: var(--accent-lavender);
-    font-family: inherit;
-    font-size:14px;
-    cursor:pointer;
-    margin-bottom:24px;
-    padding:0;
-  }
-
-  .back-btn:hover{ color: var(--accent-pink); }
 
   .post-cat{
     font-size:11px;
@@ -408,6 +424,68 @@
     top:0; left:0; width:100%; height:100%; border:0;
   }
 
+  /* ---------- Reactions ---------- */
+  .reactions{
+    display:flex;
+    align-items:center;
+    gap: 14px;
+    margin: 8px 0 40px;
+    padding-top: 24px;
+    border-top: 1px dashed var(--surface-2);
+  }
+
+  .react-btn{
+    display:flex;
+    align-items:center;
+    gap: 8px;
+    background: var(--surface);
+    border: 1px solid var(--surface-2);
+    padding: 9px 18px;
+    border-radius: 999px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    cursor: pointer;
+    transition: all .2s ease;
+  }
+
+  .react-btn:hover{ border-color: var(--accent-pink); transform: translateY(-2px); }
+
+  .react-btn.liked{
+    background: var(--accent-pink);
+    color: #2a0f1e;
+    border-color: var(--accent-pink);
+  }
+
+  .react-count{ font-variant-numeric: tabular-nums; }
+
+  /* ---------- Comments (placeholder) ---------- */
+  .comments-section{
+    padding-top: 8px;
+  }
+
+  .comments-heading{
+    font-family:'Playfair Display', serif;
+    font-style: italic;
+    font-size: 20px;
+    margin: 0 0 16px;
+  }
+
+  #commentsHost{
+    min-height: 40px;
+  }
+
+  .comments-note{
+    font-size: 13px;
+    color: var(--text-muted);
+    background: var(--surface);
+    border: 1px dashed var(--surface-2);
+    border-radius: 10px;
+    padding: 16px 18px;
+    line-height: 1.7;
+  }
+
   .page{ display:none; }
   .page.active{ display:block; }
 
@@ -426,6 +504,7 @@
   <div class="nav-links" id="navLinks"></div>
 </nav>
 
+<!-- ===================== TRANG CHỦ ===================== -->
 <section class="page active" id="page-home">
   <div class="hero">
     <img class="avatar" src="https://i.pinimg.com/1200x/97/31/d4/9731d4a044115c4df7623caec31496e1.jpg" alt="avatar">
@@ -455,23 +534,52 @@
   </div>
 </section>
 
-<section class="page" id="page-category">
-  <div class="category-header">
-    <div class="eyebrow" id="catEyebrow">chuyên mục</div>
-    <h2 id="catTitle"></h2>
-    <p id="catDesc"></p>
+<!-- ===================== TRANG MỤC NHỎ (con của 1 mục lớn) ===================== -->
+<section class="page" id="page-tiles">
+  <div class="back-btn-wrap"><button class="back-btn" onclick="goBack()">← Quay lại</button></div>
+  <div class="sub-header">
+    <div class="eyebrow" id="tilesEyebrow">chuyên mục</div>
+    <h2 id="tilesTitle"></h2>
+    <p id="tilesDesc"></p>
   </div>
-  <div class="board" id="board"></div>
+  <div class="tiles-grid" id="tilesGrid"></div>
 </section>
 
+<!-- ===================== TRANG BẢNG GHIM BÀI VIẾT ===================== -->
+<section class="page" id="page-board">
+  <div class="back-btn-wrap"><button class="back-btn" onclick="goBack()">← Quay lại</button></div>
+  <div class="sub-header">
+    <div class="eyebrow" id="boardEyebrow">chuyên mục</div>
+    <h2 id="boardTitle"></h2>
+    <p id="boardDesc"></p>
+  </div>
+  <div class="board" id="boardGrid"></div>
+</section>
+
+<!-- ===================== TRANG BÀI VIẾT / CHƯƠNG TRUYỆN ===================== -->
 <section class="page" id="page-post">
   <div class="post-view">
-    <button class="back-btn" id="postBackBtn">← Quay lại</button>
-    <div class="post-cat" id="postCat"></div>
+    <button class="back-btn" onclick="goBack()">← Quay lại</button>
+    <div class="post-cat" id="postCat" style="margin-top:20px;"></div>
     <h2 class="post-title" id="postTitle"></h2>
     <div class="post-date" id="postDate"></div>
     <img class="post-cover" id="postCover" src="" alt="">
     <div class="post-body" id="postBody"></div>
+
+    <div class="reactions">
+      <button class="react-btn" id="likeBtn">
+        <span id="likeIcon">🤍</span> <span class="react-count" id="likeCount">0</span> thích
+      </button>
+    </div>
+
+    <div class="comments-section">
+      <div class="comments-heading">💬 Bình luận</div>
+      <div id="commentsHost">
+        <div class="comments-note">
+          Phần bình luận đang chờ được kết nối — xem ghi chú cuối trang để biết cách bật lên nhé.
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -479,22 +587,79 @@
 
 <script>
 /* ============================================================
-   1) CHUYÊN MỤC — mục lục website, sửa tên/mô tả/icon tại đây
+   1) MỤC LỚN — 5 mục chính trên trang chủ
 ============================================================ */
 const categories = [
-  { key: "daily",  label: "Daily Life",             icon: "☕", desc: "Những câu chuyện nhỏ mỗi ngày." },
-  { key: "travel", label: "Travel",                 icon: "✈️", desc: "Những chuyến đi đong đầy kỉ niệm." },
-  { key: "stories",label: "My Stories",              icon: "📖", desc: "Những câu chuyện mình sáng tác." },
-  { key: "idols",  label: "My Idols",                icon: "💜", desc: "Góc fangirl-ing của mình." },
-  { key: "random", label: "Vụn Vặt Linh Tinh",        icon: "✨", desc: "Tất cả những gì không xếp được vào đâu cả." },
+  { key: "daily",   label: "Daily Life",         icon: "☕", desc: "Những câu chuyện nhỏ mỗi ngày." },
+  { key: "travel",  label: "Travel",             icon: "✈️", desc: "Những chuyến đi đong đầy kỉ niệm." },
+  { key: "stories", label: "My Stories",         icon: "📖", desc: "Những câu chuyện mình sáng tác." },
+  { key: "idols",   label: "My Idols",           icon: "💜", desc: "Góc fangirl-ing của mình." },
+  { key: "random",  label: "Vụn Vặt Linh Tinh",  icon: "✨", desc: "Tất cả những gì không xếp được vào đâu cả." },
 ];
 
 /* ============================================================
-   2) BÀI VIẾT — copy 1 khối { } để thêm bài mới.
-   - category: phải trùng với 1 trong các "key" ở trên
+   2) MỤC NHỎ — theo đúng bảng bạn đã gửi.
+   Muốn thêm/sửa/xoá mục nhỏ, chỉnh ngay tại đây.
+   - Daily Life: mục nhỏ là các NĂM — muốn thêm năm mới, copy 1 dòng rồi đổi số năm
+   - My Stories: bấm vào mục nhỏ sẽ ra DANH SÁCH TRUYỆN trước (xem phần 3),
+     rồi mới vào từng chương — khác với các mục khác (vào thẳng bài viết)
+   - key của mỗi mục nhỏ dùng để gắn bài viết/truyện vào đúng chỗ
+============================================================ */
+const subcategories = {
+  daily: [
+    { key: "2026", label: "2026", icon: "🗓️", desc: "Nhật ký năm 2026." },
+    { key: "2025", label: "2025", icon: "🗓️", desc: "Nhật ký năm 2025." },
+  ],
+  travel: [
+    { key: "chau-a",   label: "Châu Á",    icon: "🏯", desc: "Những chuyến đi ở châu Á." },
+    { key: "chau-au",  label: "Châu Âu",   icon: "🏰", desc: "Những chuyến đi ở châu Âu." },
+    { key: "uc-my",    label: "Úc - Mỹ",   icon: "🗽", desc: "Những chuyến đi ở Úc và Mỹ." },
+    { key: "viet-nam", label: "Việt Nam",  icon: "🇻🇳", desc: "Những chuyến đi trong nước." },
+  ],
+  stories: [
+    { key: "12-chom-sao", label: "12 Chòm Sao", icon: "✨", desc: "Series truyện xoay quanh 12 chòm sao." },
+    { key: "bangtanie",   label: "Bangtanie",   icon: "💜", desc: "Truyện sáng tác về Bangtan." },
+    { key: "baekyeon",    label: "Baekyeon",    icon: "🌙", desc: "Truyện sáng tác Baekyeon." },
+  ],
+  idols: [
+    { key: "bangtanie",          label: "Bangtanie",           icon: "💜", desc: "Nội dung chung về BTS." },
+    { key: "hoseok-em-thuong",   label: "Hoseok Em Thương",    icon: "🐿️", desc: "Góc riêng dành cho j-hope." },
+    { key: "mot-chut-mong-mo",   label: "Một Chút Mộng Mơ",    icon: "🌸", desc: "Những cảm xúc mộng mơ về idol." },
+    { key: "chuyen-cua-rosie",   label: "Chuyện Của Rosie",    icon: "📔", desc: "Câu chuyện fangirl của riêng mình." },
+  ],
+  random: [
+    { key: "review-phim", label: "Review Phim",  icon: "🎬", desc: "Cảm nhận về phim đã xem." },
+    { key: "review-sach", label: "Review Sách",  icon: "📚", desc: "Cảm nhận về sách đã đọc." },
+    { key: "tam-su-nho",  label: "Tâm Sự Nhỏ",   icon: "🌧️", desc: "Những dòng tâm sự vụn vặt." },
+  ],
+};
+
+/* ============================================================
+   3) TRUYỆN (chỉ dùng cho My Stories) — mỗi mục nhỏ ở trên
+   (12 Chòm Sao / Bangtanie / Baekyeon) sẽ chứa nhiều truyện,
+   mỗi truyện lại chứa nhiều chương.
+   - subcategory: khớp đúng key mục nhỏ ở phần (2), trong nhóm "stories"
+   Thêm truyện mới: copy 1 khối { } rồi đổi nội dung
+============================================================ */
+const stories = [
+  // ví dụ mẫu — xoá dòng comment và điền thật khi bạn có truyện:
+  // { id: "s1", subcategory: "bangtanie", title: "Tên truyện của bạn", cover: "link-anh-bia.jpg", desc: "Mô tả ngắn về truyện..." },
+];
+
+/* ============================================================
+   4) BÀI VIẾT / CHƯƠNG TRUYỆN — copy 1 khối { } để thêm mới.
+   - category: 1 trong "daily", "travel", "stories", "idols", "random"
+
+   Với bài viết bình thường (không phải "stories"):
+   - subcategory: phải khớp đúng key của 1 mục nhỏ ở phần (2)
+
+   Với chương truyện (category: "stories"):
+   - storyId: khớp đúng id của 1 truyện ở phần (3) — KHÔNG cần điền subcategory
+   - chapterNumber: số thứ tự chương, web tự sắp xếp và hiện "Chap X"
+
+   Chung cho cả 2 loại:
    - image: link ảnh bìa
    - videoId: để trống nếu không có video, hoặc điền ID Youtube
-     (từ link youtube.com/watch?v=XXXXX -> lấy phần XXXXX)
    - content: viết đoạn văn trong <p>...</p>, chèn ảnh bằng <img src="...">
 ============================================================ */
 const posts = [
@@ -507,9 +672,10 @@ const posts = [
 ============================================================ */
 const navLinks = document.getElementById('navLinks');
 const tocGrid = document.getElementById('tocGrid');
-const board = document.getElementById('board');
-let currentCategory = null;
-let cameFromPost = null;
+const placeholderImg = "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800&q=80";
+
+let screenStack = [];
+let currentScreen = { type: 'home' };
 
 function renderNav(activeKey){
   navLinks.innerHTML = '';
@@ -523,7 +689,7 @@ function renderNav(activeKey){
     const el = document.createElement('div');
     el.className = 'nav-link' + (activeKey === cat.key ? ' active' : '');
     el.textContent = cat.label;
-    el.onclick = () => openCategory(cat.key);
+    el.onclick = () => openCategoryEntry(cat.key);
     navLinks.appendChild(el);
   });
 }
@@ -533,7 +699,7 @@ function renderToc(){
   categories.forEach(cat => {
     const tile = document.createElement('div');
     tile.className = 'toc-tile';
-    tile.onclick = () => openCategory(cat.key);
+    tile.onclick = () => openCategoryEntry(cat.key);
     tile.innerHTML = `
       <span class="toc-icon">${cat.icon}</span>
       <h3>${cat.label}</h3>
@@ -549,72 +715,264 @@ function showPage(id){
   window.scrollTo({top:0, behavior:'smooth'});
 }
 
-function goHome(){
-  currentCategory = null;
-  renderNav('home');
-  showPage('page-home');
+function goTo(screen){
+  screenStack.push(currentScreen);
+  renderScreen(screen);
 }
 
-function openCategory(key){
-  currentCategory = key;
-  const cat = categories.find(c => c.key === key);
-  document.getElementById('catTitle').textContent = cat.label;
-  document.getElementById('catDesc').textContent = cat.desc;
-  document.getElementById('catEyebrow').textContent = cat.icon + ' chuyên mục';
+function openCategoryEntry(key){
+  screenStack = [{ type: 'home' }];
+  renderScreen({ type: 'catSub', cat: key });
+}
 
-  const filtered = posts.filter(p => p.category === key);
-  board.innerHTML = '';
-  if(filtered.length === 0){
-    board.innerHTML = '<div class="empty-note">Chưa có bài viết nào ở mục này.</div>';
-  } else {
-    filtered.forEach(p => {
-      const card = document.createElement('div');
-      card.className = 'card';
-      card.onclick = () => openPost(p.id);
-      card.innerHTML = `
-        <div class="tape"></div>
-        <img class="card-img" src="${p.image}" alt="">
-        <span class="card-cat">${cat.label}</span>
-        <div class="card-title">${p.title}</div>
-        <div class="card-date">${p.date}</div>
-        <div class="card-excerpt">${p.excerpt}</div>
-      `;
-      board.appendChild(card);
-    });
+function goHome(){
+  screenStack = [];
+  renderScreen({ type: 'home' });
+}
+
+function goBack(){
+  const prev = screenStack.pop();
+  renderScreen(prev || { type: 'home' });
+}
+
+function renderScreen(screen){
+  currentScreen = screen;
+
+  if(screen.type === 'home'){
+    renderNav('home');
+    showPage('page-home');
+    return;
+  }
+  if(screen.type === 'catSub'){
+    renderTilesForCategory(screen.cat);
+    renderNav(screen.cat);
+    showPage('page-tiles');
+    return;
+  }
+  if(screen.type === 'posts'){
+    renderBoardForPosts(screen.cat, screen.sub);
+    renderNav(screen.cat);
+    showPage('page-board');
+    return;
+  }
+  if(screen.type === 'storiesList'){
+    renderBoardForStoriesList(screen.sub);
+    renderNav('stories');
+    showPage('page-board');
+    return;
+  }
+  if(screen.type === 'chapters'){
+    renderBoardForChapters(screen.storyId);
+    renderNav('stories');
+    showPage('page-board');
+    return;
+  }
+  if(screen.type === 'post'){
+    renderPost(screen.postId);
+    showPage('page-post');
+    return;
+  }
+}
+
+/* ---------- tile pages (mục nhỏ) ---------- */
+function renderTilesForCategory(catKey){
+  const cat = categories.find(c => c.key === catKey);
+  document.getElementById('tilesEyebrow').textContent = cat.icon + ' chuyên mục';
+  document.getElementById('tilesTitle').textContent = cat.label;
+  document.getElementById('tilesDesc').textContent = cat.desc;
+
+  const subs = subcategories[catKey] || [];
+  const grid = document.getElementById('tilesGrid');
+  grid.innerHTML = '';
+  if(subs.length === 0){
+    grid.innerHTML = '<div class="empty-note">Chưa có mục nào ở đây.</div>';
+    return;
+  }
+  subs.forEach(sub => {
+    const tile = document.createElement('div');
+    tile.className = 'toc-tile';
+    if(catKey === 'stories'){
+      tile.onclick = () => goTo({ type: 'storiesList', sub: sub.key });
+    } else {
+      tile.onclick = () => goTo({ type: 'posts', cat: catKey, sub: sub.key });
+    }
+    tile.innerHTML = `
+      <span class="toc-icon">${sub.icon}</span>
+      <h3>${sub.label}</h3>
+      <p>${sub.desc}</p>
+    `;
+    grid.appendChild(tile);
+  });
+}
+
+/* ---------- board page (bài viết trong 1 mục nhỏ) ---------- */
+function renderBoardForPosts(catKey, subKey){
+  const cat = categories.find(c => c.key === catKey);
+  const sub = (subcategories[catKey] || []).find(s => s.key === subKey);
+  document.getElementById('boardEyebrow').textContent = (sub ? sub.icon : cat.icon) + ' ' + cat.label;
+  document.getElementById('boardTitle').textContent = sub ? sub.label : cat.label;
+  document.getElementById('boardDesc').textContent = sub ? sub.desc : '';
+
+  let filtered = posts.filter(p => p.category === catKey && p.subcategory === subKey);
+
+  // truyện nhiều chương: nếu có chapterNumber thì sắp xếp theo thứ tự chương
+  const hasChapters = filtered.some(p => p.chapterNumber);
+  if(hasChapters){
+    filtered = filtered.slice().sort((a, b) => (a.chapterNumber || 0) - (b.chapterNumber || 0));
   }
 
-  renderNav(key);
-  showPage('page-category');
+  const grid = document.getElementById('boardGrid');
+  grid.innerHTML = '';
+  if(filtered.length === 0){
+    grid.innerHTML = '<div class="empty-note">Chưa có bài viết nào ở mục này.</div>';
+    return;
+  }
+  filtered.forEach(p => {
+    const badge = p.chapterNumber ? `Chap ${p.chapterNumber}` : (sub ? sub.label : cat.label);
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.onclick = () => goTo({ type: 'post', postId: p.id });
+    card.innerHTML = `
+      <div class="tape"></div>
+      <img class="card-img" src="${p.image || placeholderImg}" alt="">
+      <span class="card-cat">${badge}</span>
+      <div class="card-title">${p.title}</div>
+      <div class="card-date">${p.date}</div>
+      <div class="card-excerpt">${p.excerpt || ''}</div>
+    `;
+    grid.appendChild(card);
+  });
 }
 
-function openPost(id){
-  const p = posts.find(x => x.id === id);
-  if(!p) return;
-  const cat = categories.find(c => c.key === p.category);
+/* ---------- board page: danh sách TRUYỆN trong 1 mục nhỏ của My Stories ---------- */
+function renderBoardForStoriesList(subKey){
+  const cat = categories.find(c => c.key === 'stories');
+  const sub = (subcategories.stories || []).find(s => s.key === subKey);
+  document.getElementById('boardEyebrow').textContent = (sub ? sub.icon : cat.icon) + ' ' + cat.label;
+  document.getElementById('boardTitle').textContent = sub ? sub.label : cat.label;
+  document.getElementById('boardDesc').textContent = sub ? sub.desc : '';
 
-  document.getElementById('postCat').textContent = cat ? cat.label : '';
+  const filtered = stories.filter(s => s.subcategory === subKey);
+
+  const grid = document.getElementById('boardGrid');
+  grid.innerHTML = '';
+  if(filtered.length === 0){
+    grid.innerHTML = '<div class="empty-note">Chưa có truyện nào ở mục này.</div>';
+    return;
+  }
+  filtered.forEach(s => {
+    const chapterCount = posts.filter(p => p.category === 'stories' && p.storyId === s.id).length;
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.onclick = () => goTo({ type: 'chapters', storyId: s.id });
+    card.innerHTML = `
+      <div class="tape"></div>
+      <img class="card-img" src="${s.cover || placeholderImg}" alt="">
+      <span class="card-cat">${chapterCount} chương</span>
+      <div class="card-title">${s.title}</div>
+      <div class="card-excerpt">${s.desc || ''}</div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+/* ---------- board page: danh sách CHƯƠNG trong 1 truyện ---------- */
+function renderBoardForChapters(storyId){
+  const story = stories.find(s => s.id === storyId);
+  if(!story) return;
+  const sub = (subcategories.stories || []).find(s => s.key === story.subcategory);
+
+  document.getElementById('boardEyebrow').textContent = (sub ? sub.icon : '📖') + ' ' + (sub ? sub.label : 'My Stories');
+  document.getElementById('boardTitle').textContent = story.title;
+  document.getElementById('boardDesc').textContent = story.desc || '';
+
+  const filtered = posts
+    .filter(p => p.category === 'stories' && p.storyId === storyId)
+    .slice()
+    .sort((a, b) => (a.chapterNumber || 0) - (b.chapterNumber || 0));
+
+  const grid = document.getElementById('boardGrid');
+  grid.innerHTML = '';
+  if(filtered.length === 0){
+    grid.innerHTML = '<div class="empty-note">Chưa có chương nào cho truyện này.</div>';
+    return;
+  }
+  filtered.forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.onclick = () => goTo({ type: 'post', postId: p.id });
+    card.innerHTML = `
+      <div class="tape"></div>
+      <img class="card-img" src="${p.image || story.cover || placeholderImg}" alt="">
+      <span class="card-cat">Chap ${p.chapterNumber || '?'}</span>
+      <div class="card-title">${p.title}</div>
+      <div class="card-date">${p.date || ''}</div>
+      <div class="card-excerpt">${p.excerpt || ''}</div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+/* ---------- post detail ---------- */
+function renderPost(postId){
+  const p = posts.find(x => x.id === postId);
+  if(!p) return;
+
+  const cat = categories.find(c => c.key === p.category);
+  let catLabel = cat ? cat.label : '';
+
+  if(p.category === 'stories' && p.storyId){
+    const story = stories.find(s => s.id === p.storyId);
+    const sub = story ? (subcategories.stories || []).find(s => s.key === story.subcategory) : null;
+    catLabel = [cat.label, sub ? sub.label : null, story ? story.title : null]
+      .filter(Boolean).join(' · ');
+    if(p.chapterNumber) catLabel += ` · Chap ${p.chapterNumber}`;
+  } else {
+    const sub = (subcategories[p.category] || []).find(s => s.key === p.subcategory);
+    catLabel = sub ? `${cat.label} · ${sub.label}` : catLabel;
+  }
+
+  document.getElementById('postCat').textContent = catLabel;
   document.getElementById('postTitle').textContent = p.title;
   document.getElementById('postDate').textContent = p.date;
-  document.getElementById('postCover').src = p.image;
+  document.getElementById('postCover').src = p.image || placeholderImg;
 
-  let bodyHtml = p.content;
+  let bodyHtml = p.content || '';
   if(p.videoId){
     bodyHtml += `<div class="video-wrap"><iframe src="https://www.youtube.com/embed/${p.videoId}" allowfullscreen></iframe></div>`;
   }
   document.getElementById('postBody').innerHTML = bodyHtml;
 
-  cameFromPost = currentCategory;
-  showPage('page-post');
+  setupLikeButton(postId);
 }
 
-document.getElementById('postBackBtn').onclick = () => {
-  if(cameFromPost){
-    openCategory(cameFromPost);
-  } else {
-    goHome();
-  }
-};
+/* ---------- like button (đếm trên máy người xem, xem ghi chú bên dưới) ---------- */
+function setupLikeButton(postId){
+  const btn = document.getElementById('likeBtn');
+  const icon = document.getElementById('likeIcon');
+  const countEl = document.getElementById('likeCount');
+  const storeKey = 'like_' + postId;
 
+  let liked = localStorage.getItem(storeKey) === '1';
+  let count = parseInt(localStorage.getItem(storeKey + '_count') || '0', 10);
+
+  function paint(){
+    icon.textContent = liked ? '💖' : '🤍';
+    countEl.textContent = count;
+    btn.classList.toggle('liked', liked);
+  }
+  paint();
+
+  btn.onclick = () => {
+    liked = !liked;
+    count += liked ? 1 : -1;
+    localStorage.setItem(storeKey, liked ? '1' : '0');
+    localStorage.setItem(storeKey + '_count', String(count));
+    paint();
+  };
+}
+
+/* ---------- init ---------- */
 renderNav('home');
 renderToc();
 </script>
