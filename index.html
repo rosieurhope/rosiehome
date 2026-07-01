@@ -428,7 +428,7 @@
 
 <section class="page active" id="page-home">
   <div class="hero">
-    <img class="avatar" src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=200&q=80" alt="avatar">
+    <img class="avatar" src="https://i.pinimg.com/1200x/97/31/d4/9731d4a044115c4df7623caec31496e1.jpg" alt="avatar">
     <div class="eyebrow">✿ xin chào, mình là</div>
     <h1 class="site-title">Rosie</h1>
     <p class="site-bio">
@@ -440,7 +440,7 @@
 
   <div class="toc-heading">
     <div class="eyebrow">mục lục</div>
-    <h2>Bạn muốn đọc gì hôm nay?</h2>
+    <h2>Nhà mình có gì?</h2>
   </div>
 
   <div class="toc-grid" id="tocGrid"></div>
@@ -448,11 +448,8 @@
   <div class="social-section">
     <div class="eyebrow">theo dõi mình thêm tại</div>
     <div class="social-links">
-      <a class="social-link" href="https://www.tiktok.com/@ten-tiktok-cua-ban" target="_blank" rel="noopener">
+      <a class="social-link" href="https://www.tiktok.com/@rosieurhope" target="_blank" rel="noopener">
         <span class="icon">🎵</span> TikTok
-      </a>
-      <a class="social-link" href="https://www.youtube.com/@ten-youtube-cua-ban" target="_blank" rel="noopener">
-        <span class="icon">▶️</span> YouTube
       </a>
     </div>
   </div>
@@ -478,17 +475,17 @@
   </div>
 </section>
 
-<footer>made with 💜 — chỉnh sửa nội dung ngay trong file này</footer>
+<footer>made with love ❤️</footer>
 
 <script>
 /* ============================================================
    1) CHUYÊN MỤC — mục lục website, sửa tên/mô tả/icon tại đây
 ============================================================ */
 const categories = [
-  { key: "daily",  label: "Daily Life",             icon: "☕", desc: "Những chuyện vặt vãnh mỗi ngày, đơn giản mà đáng nhớ." },
-  { key: "travel", label: "Travel",                 icon: "✈️", desc: "Ghi chép các chuyến đi, địa điểm và trải nghiệm." },
-  { key: "stories",label: "My Stories",              icon: "📖", desc: "Những câu chuyện dài hơn mình muốn kể lại." },
-  { key: "idols",  label: "My Idols",                icon: "💜", desc: "Góc dành riêng cho BTS và các idol yêu thích." },
+  { key: "daily",  label: "Daily Life",             icon: "☕", desc: "Những câu chuyện nhỏ mỗi ngày." },
+  { key: "travel", label: "Travel",                 icon: "✈️", desc: "Những chuyến đi đong đầy kỉ niệm." },
+  { key: "stories",label: "My Stories",              icon: "📖", desc: "Những câu chuyện mình sáng tác." },
+  { key: "idols",  label: "My Idols",                icon: "💜", desc: "Góc fangirl-ing của mình." },
   { key: "random", label: "Vụn Vặt Linh Tinh",        icon: "✨", desc: "Tất cả những gì không xếp được vào đâu cả." },
 ];
 
@@ -501,71 +498,8 @@ const categories = [
    - content: viết đoạn văn trong <p>...</p>, chèn ảnh bằng <img src="...">
 ============================================================ */
 const posts = [
-  {
-    id: 1,
-    category: "idols",
-    title: "Dịch fanchat: j-hope nhắn gì đêm qua",
-    date: "28.06.2026",
-    excerpt: "Một đoạn fanchat ngắn nhưng ấm áp, mình dịch lại nguyên văn cho mọi người...",
-    image: "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=800&q=80",
-    videoId: "",
-    content: `
-      <p>Đêm qua lúc mọi người chuẩn bị đi ngủ thì có tin nhắn mới xuất hiện trên fancafe. Mình đã dịch lại nguyên văn để lưu lại khoảnh khắc này.</p>
-      <p>Đây chỉ là bài mẫu — bạn có thể thay bằng bản dịch thật của mình, kèm ảnh chụp màn hình fanchat nếu muốn.</p>
-    `
-  },
-  {
-    id: 2,
-    category: "idols",
-    title: "Cày lại MV thời kỳ HYYH",
-    date: "24.06.2026",
-    excerpt: "Xem lại loạt MV HYYH và vẫn nổi da gà y như lần đầu...",
-    image: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800&q=80",
-    videoId: "dQw4w9WgXcQ",
-    content: `
-      <p>Đây là bài mẫu có nhúng video — bạn chỉ cần đổi videoId ở phần dữ liệu phía trên thành ID video Youtube thật của mình.</p>
-      <p>Ví dụ cách viết cảm nhận về MV, phân tích ý nghĩa, hoặc chỉ đơn giản là spam tim cũng được 💜</p>
-    `
-  },
-  {
-    id: 3,
-    category: "daily",
-    title: "Một ngày cuối tuần chậm rãi",
-    date: "20.06.2026",
-    excerpt: "Ngồi cà phê, đọc vài trang manhwa, và nghĩ về những điều nhỏ nhặt...",
-    image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800&q=80",
-    videoId: "",
-    content: `
-      <p>Đây là bài mẫu cho phần Daily Life. Bạn có thể viết về ngày của mình, review skincare, hay bất cứ điều gì muốn lưu lại.</p>
-      <p>Chèn ảnh giữa bài như thế này:</p>
-      <img src="https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?w=800&q=80" alt="">
-      <p>Vậy là xong một bài viết hoàn chỉnh rồi!</p>
-    `
-  },
-  {
-    id: 4,
-    category: "travel",
-    title: "Vali đã sẵn sàng, chỉ chờ ngày bay",
-    date: "15.06.2026",
-    excerpt: "Chuẩn bị hành lý cho chuyến đi sắp tới, cảm giác háo hức không tả được...",
-    image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=800&q=80",
-    videoId: "",
-    content: `
-      <p>Đây là bài mẫu cho mục Travel — ghi lại hành trình, lịch trình, hoặc cảm nhận về từng chuyến đi.</p>
-    `
-  },
-  {
-    id: 5,
-    category: "random",
-    title: "Vài dòng linh tinh cuối tuần",
-    date: "10.06.2026",
-    excerpt: "Không chủ đề cụ thể, chỉ là vài suy nghĩ ngẫu nhiên muốn ghi lại...",
-    image: "https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=800&q=80",
-    videoId: "",
-    content: `
-      <p>Mục này dành cho tất cả những gì không xếp gọn vào 4 chuyên mục còn lại — có thể là một câu nói hay, một ý tưởng chợt nghĩ ra, hoặc bất cứ điều gì.</p>
-    `
-  }
+  // tạm thời để trống — dùng công cụ "tao-bai-viet.html" để tạo bài mới
+  // rồi dán khối code vào đây khi sẵn sàng đăng bài
 ];
 
 /* ============================================================
