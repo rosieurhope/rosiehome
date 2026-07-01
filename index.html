@@ -424,45 +424,10 @@
     top:0; left:0; width:100%; height:100%; border:0;
   }
 
-  /* ---------- Reactions ---------- */
-  .reactions{
-    display:flex;
-    align-items:center;
-    gap: 14px;
-    margin: 8px 0 40px;
+  /* ---------- Comments (Giscus) ---------- */
+  .comments-section{
     padding-top: 24px;
     border-top: 1px dashed var(--surface-2);
-  }
-
-  .react-btn{
-    display:flex;
-    align-items:center;
-    gap: 8px;
-    background: var(--surface);
-    border: 1px solid var(--surface-2);
-    padding: 9px 18px;
-    border-radius: 999px;
-    font-family: inherit;
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--text);
-    cursor: pointer;
-    transition: all .2s ease;
-  }
-
-  .react-btn:hover{ border-color: var(--accent-pink); transform: translateY(-2px); }
-
-  .react-btn.liked{
-    background: var(--accent-pink);
-    color: #2a0f1e;
-    border-color: var(--accent-pink);
-  }
-
-  .react-count{ font-variant-numeric: tabular-nums; }
-
-  /* ---------- Comments (placeholder) ---------- */
-  .comments-section{
-    padding-top: 8px;
   }
 
   .comments-heading{
@@ -474,16 +439,6 @@
 
   #commentsHost{
     min-height: 40px;
-  }
-
-  .comments-note{
-    font-size: 13px;
-    color: var(--text-muted);
-    background: var(--surface);
-    border: 1px dashed var(--surface-2);
-    border-radius: 10px;
-    padding: 16px 18px;
-    line-height: 1.7;
   }
 
   .page{ display:none; }
@@ -566,18 +521,24 @@
     <img class="post-cover" id="postCover" src="" alt="">
     <div class="post-body" id="postBody"></div>
 
-    <div class="reactions">
-      <button class="react-btn" id="likeBtn">
-        <span id="likeIcon">🤍</span> <span class="react-count" id="likeCount">0</span> thích
-      </button>
-    </div>
-
     <div class="comments-section">
-      <div class="comments-heading">💬 Bình luận</div>
+      <div class="comments-heading">💬 Thích &amp; Bình luận</div>
       <div id="commentsHost">
-        <div class="comments-note">
-          Phần bình luận đang chờ được kết nối — xem ghi chú cuối trang để biết cách bật lên nhé.
-        </div>
+        <script src="https://giscus.app/client.js"
+                data-repo="rosieurhope/rosiehome"
+                data-repo-id="R_kgDOTKGTdg"
+                data-category="General"
+                data-category-id="DIC_kwDOTKGTds4DARQm"
+                data-mapping="pathname"
+                data-strict="0"
+                data-reactions-enabled="1"
+                data-emit-metadata="0"
+                data-input-position="top"
+                data-theme="catppuccin_latte"
+                data-lang="vi"
+                crossorigin="anonymous"
+                async>
+        </script>
       </div>
     </div>
   </div>
@@ -616,19 +577,19 @@ const subcategories = {
     { key: "viet-nam", label: "Việt Nam",  icon: "🇻🇳", desc: "Những chuyến đi trong nước." },
   ],
   stories: [
-    { key: "12-chom-sao", label: "12 Chòm Sao", icon: "✨", desc: "Series truyện về 12 chòm sao." },
-    { key: "bangtanie",   label: "Bangtanie",   icon: "💜", desc: "Series truyện về Bangtan." },
-    { key: "baekyeon",    label: "Baekyeon",    icon: "🌙", desc: "Series truyện về Baekyeon." },
+    { key: "12-chom-sao", label: "12 Chòm Sao", icon: "✨", desc: "Series về 12 chòm sao." },
+    { key: "bangtanie",   label: "Bangtanie",   icon: "💜", desc: "Series về Bangtanie." },
+    { key: "baekyeon",    label: "Baekyeon",    icon: "🌙", desc: "Series về Baekyeon." },
   ],
   idols: [
-    { key: "bangtanie",          label: "Bangtanie",           icon: "💜", desc: "Dành cho Bangtanie." },
-    { key: "hoseok-em-thuong",   label: "Hoseok Em Thương",    icon: "🐿️", desc: "Dành cho anh Bi." },
+    { key: "bangtanie",          label: "Bangtanie",           icon: "💜", desc: "Tâm sự về Bangtanie." },
+    { key: "hoseok-em-thuong",   label: "Hoseok Em Thương",    icon: "🐿️", desc: "Tâm sự về anh Bi." },
     { key: "mot-chut-mong-mo",   label: "Một Chút Mộng Mơ",    icon: "🌸", desc: "Một chút mộng mơ." },
     { key: "chuyen-cua-rosie",   label: "Chuyện Của Rosie",    icon: "📔", desc: "Câu chuyện fangirl của riêng mình." },
   ],
   random: [
-    { key: "review-phim", label: "Review Phim",  icon: "🎬", desc: "Cảm nhận về phim mình đã xem." },
-    { key: "review-sach", label: "Review Sách",  icon: "📚", desc: "Cảm nhận về sách mình đã đọc." },
+    { key: "review-phim", label: "Review Phim",  icon: "🎬", desc: "Cảm nhận về phim đã xem." },
+    { key: "review-sach", label: "Review Sách",  icon: "📚", desc: "Cảm nhận về sách đã đọc." },
     { key: "tam-su-nho",  label: "Tâm Sự Nhỏ",   icon: "🌧️", desc: "Những dòng tâm sự vụn vặt." },
   ],
 };
@@ -941,34 +902,6 @@ function renderPost(postId){
     bodyHtml += `<div class="video-wrap"><iframe src="https://www.youtube.com/embed/${p.videoId}" allowfullscreen></iframe></div>`;
   }
   document.getElementById('postBody').innerHTML = bodyHtml;
-
-  setupLikeButton(postId);
-}
-
-/* ---------- like button (đếm trên máy người xem, xem ghi chú bên dưới) ---------- */
-function setupLikeButton(postId){
-  const btn = document.getElementById('likeBtn');
-  const icon = document.getElementById('likeIcon');
-  const countEl = document.getElementById('likeCount');
-  const storeKey = 'like_' + postId;
-
-  let liked = localStorage.getItem(storeKey) === '1';
-  let count = parseInt(localStorage.getItem(storeKey + '_count') || '0', 10);
-
-  function paint(){
-    icon.textContent = liked ? '💖' : '🤍';
-    countEl.textContent = count;
-    btn.classList.toggle('liked', liked);
-  }
-  paint();
-
-  btn.onclick = () => {
-    liked = !liked;
-    count += liked ? 1 : -1;
-    localStorage.setItem(storeKey, liked ? '1' : '0');
-    localStorage.setItem(storeKey + '_count', String(count));
-    paint();
-  };
 }
 
 /* ---------- init ---------- */
