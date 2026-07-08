@@ -682,7 +682,7 @@ const posts = [
     `
   },
   {
-    id: 3, 
+    id: 3,
     category: "idols",
     subcategory: "chuyen-cua-rosie",
     title: "Tháng Sáu Festa ở Busan",
@@ -758,6 +758,62 @@ function showPage(id){
   window.scrollTo({top:0, behavior:'smooth'});
 }
 
+/* ---------- URL cho từng màn hình (để copy link chia sẻ đúng chỗ) ---------- */
+function screenToHash(screen){
+  if(screen.type === 'catSub') return `cat/${screen.cat}`;
+  if(screen.type === 'posts') return `posts/${screen.cat}/${screen.sub}`;
+  if(screen.type === 'storiesList') return `stories/${screen.sub}`;
+  if(screen.type === 'chapters') return `chapters/${screen.storyId}`;
+  if(screen.type === 'post') return `post/${screen.postId}`;
+  return '';
+}
+
+function hashToScreen(rawHash){
+  const hash = (rawHash || '').replace(/^#\/?/, '');
+  if(!hash) return { type: 'home' };
+  const parts = hash.split('/');
+  if(parts[0] === 'cat' && parts[1]) return { type: 'catSub', cat: parts[1] };
+  if(parts[0] === 'posts' && parts[1] && parts[2]) return { type: 'posts', cat: parts[1], sub: parts[2] };
+  if(parts[0] === 'stories' && parts[1]) return { type: 'storiesList', sub: parts[1] };
+  if(parts[0] === 'chapters' && parts[1]) return { type: 'chapters', storyId: parts[1] };
+  if(parts[0] === 'post' && parts[1]){
+    const raw = parts[1];
+    const id = isNaN(Number(raw)) ? raw : Number(raw);
+    return { type: 'post', postId: id };
+  }
+  return { type: 'home' };
+}
+
+// Dựng lại "đường đi" (để nút Quay lại hoạt động hợp lý) khi người xem mở thẳng 1 link chia sẻ
+function buildAncestors(screen){
+  const stack = [{ type: 'home' }];
+  if(screen.type === 'posts'){
+    stack.push({ type: 'catSub', cat: screen.cat });
+  } else if(screen.type === 'storiesList'){
+    stack.push({ type: 'catSub', cat: 'stories' });
+  } else if(screen.type === 'chapters'){
+    stack.push({ type: 'catSub', cat: 'stories' });
+    const story = stories.find(s => s.id === screen.storyId);
+    if(story) stack.push({ type: 'storiesList', sub: story.subcategory });
+  } else if(screen.type === 'post'){
+    const p = posts.find(x => x.id === screen.postId);
+    if(p){
+      if(p.category === 'stories' && p.storyId){
+        stack.push({ type: 'catSub', cat: 'stories' });
+        const story = stories.find(s => s.id === p.storyId);
+        if(story){
+          stack.push({ type: 'storiesList', sub: story.subcategory });
+          stack.push({ type: 'chapters', storyId: story.id });
+        }
+      } else {
+        stack.push({ type: 'catSub', cat: p.category });
+        stack.push({ type: 'posts', cat: p.category, sub: p.subcategory });
+      }
+    }
+  }
+  return stack;
+}
+
 function goTo(screen){
   screenStack.push(currentScreen);
   renderScreen(screen);
@@ -780,6 +836,8 @@ function goBack(){
 
 function renderScreen(screen){
   currentScreen = screen;
+  const hash = screenToHash(screen);
+  history.replaceState(null, '', hash ? ('#' + hash) : window.location.pathname + window.location.search);
 
   if(screen.type === 'home'){
     renderNav('home');
@@ -988,8 +1046,10 @@ function renderPost(postId){
 }
 
 /* ---------- init ---------- */
-renderNav('home');
 renderToc();
+const initialScreen = hashToScreen(window.location.hash);
+screenStack = buildAncestors(initialScreen);
+renderScreen(initialScreen);
 </script>
 
 </body>
